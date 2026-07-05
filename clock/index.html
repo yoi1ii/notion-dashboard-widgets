@@ -3,21 +3,13 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Lumen Glass Clock</title>
+<title>Lumen Clock</title>
 
 <style>
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-}
-
-:root {
-  --ink: #53677d;
-  --soft-ink: #8fa4b8;
-  --pale: #f7fbff;
-  --glass: rgba(244, 249, 253, 0.58);
-  --line: rgba(255, 255, 255, 0.82);
 }
 
 body {
@@ -30,179 +22,136 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, sans-serif;
 }
 
-.clock-card {
-  width: 236px;
-  height: 142px;
+.clock {
+  width: 330px;
+  height: 190px;
   position: relative;
   overflow: hidden;
-  text-align: center;
-  border-radius: 34px;
-  padding: 23px 25px 20px;
+  border-radius: 38px;
+  padding: 24px 26px;
 
   background:
-    radial-gradient(circle at 18% 0%, rgba(255,255,255,.95), transparent 36%),
-    radial-gradient(circle at 86% 88%, rgba(194,216,233,.26), transparent 38%),
-    linear-gradient(145deg, rgba(255,255,255,.72), rgba(226,238,248,.38));
+    radial-gradient(circle at 18% 12%, rgba(255,255,255,.72), transparent 30%),
+    radial-gradient(circle at 78% 82%, rgba(176,205,225,.28), transparent 35%),
+    linear-gradient(135deg, rgba(246,250,253,.58), rgba(210,225,238,.28));
 
-  border: 1px solid var(--line);
+  border: 1px solid rgba(255,255,255,.72);
 
   box-shadow:
-    0 24px 55px rgba(95, 125, 154, .16),
-    0 6px 18px rgba(126, 158, 188, .10),
-    inset 0 1px 1px rgba(255,255,255,.95),
-    inset 0 -18px 38px rgba(196,216,232,.12);
+    0 24px 60px rgba(92,120,145,.18),
+    inset 0 1px 1px rgba(255,255,255,.9),
+    inset 0 -28px 50px rgba(160,190,215,.12);
 
-  backdrop-filter: blur(22px) saturate(125%);
-  -webkit-backdrop-filter: blur(22px) saturate(125%);
-
-  transform: translateZ(0);
+  backdrop-filter: blur(24px) saturate(120%);
+  -webkit-backdrop-filter: blur(24px) saturate(120%);
 }
 
-.clock-card::before {
+.clock::before {
   content: "";
   position: absolute;
-  inset: -55%;
-  background:
-    linear-gradient(
-      112deg,
-      transparent 38%,
-      rgba(255,255,255,.22) 45%,
-      rgba(255,255,255,.72) 50%,
-      rgba(195,220,240,.20) 55%,
-      transparent 63%
-    );
-  transform: translateX(-54%) rotate(8deg);
+  inset: -60%;
+  background: linear-gradient(
+    115deg,
+    transparent 40%,
+    rgba(255,255,255,.58) 50%,
+    transparent 60%
+  );
   opacity: 0;
-  animation: glassLight 12s ease-in-out infinite;
-  pointer-events: none;
+  animation: light 13s ease-in-out infinite;
 }
 
-.clock-card::after {
+.clock::after {
   content: "";
   position: absolute;
-  width: 170px;
-  height: 72px;
-  left: 30px;
-  bottom: -35px;
-  border-radius: 50%;
-  background:
-    radial-gradient(ellipse at center,
-      rgba(255,255,255,.52) 0%,
-      rgba(203,224,239,.22) 45%,
-      transparent 72%
-    );
-  filter: blur(10px);
-  opacity: .65;
+  inset: 10px;
+  border-radius: 30px;
+  border-top: 1px solid rgba(255,255,255,.58);
+  border-left: 1px solid rgba(255,255,255,.28);
   pointer-events: none;
 }
 
-.lens {
-  position: absolute;
-  inset: 9px;
-  border-radius: 28px;
-  pointer-events: none;
-  border-top: 1px solid rgba(255,255,255,.72);
-  border-left: 1px solid rgba(255,255,255,.34);
-  box-shadow:
-    inset 10px 8px 24px rgba(255,255,255,.32),
-    inset -12px -16px 28px rgba(157,188,213,.10);
-  opacity: .82;
+.date {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  font-size: 13px;
+  letter-spacing: .16em;
+  font-weight: 700;
+  color: rgba(94,112,130,.66);
+  margin-bottom: 8px;
+}
+
+.time-wrap {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  gap: 10px;
+}
+
+#time {
+  font-size: 86px;
+  line-height: .95;
+  letter-spacing: -0.08em;
+  font-weight: 800;
+  color: rgba(255,255,255,.92);
+  text-shadow:
+    0 1px 12px rgba(95,120,145,.16),
+    0 2px 24px rgba(255,255,255,.52);
+}
+
+#ampm {
+  font-size: 15px;
+  letter-spacing: .12em;
+  font-weight: 800;
+  color: rgba(255,255,255,.78);
+  text-shadow: 0 1px 10px rgba(96,120,145,.18);
+}
+
+.sub {
+  position: relative;
+  z-index: 2;
+  margin-top: 14px;
+  display: flex;
+  justify-content: center;
+  gap: 9px;
+  align-items: center;
+  font-size: 11px;
+  letter-spacing: .18em;
+  font-weight: 700;
+  color: rgba(103,124,143,.58);
+}
+
+.sub span {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.95);
+  box-shadow: 0 0 14px rgba(190,220,242,.95);
 }
 
 .caustic {
   position: absolute;
   inset: 0;
-  opacity: .18;
-  pointer-events: none;
+  opacity: .16;
   background:
-    radial-gradient(ellipse at 20% 36%, transparent 0 32%, rgba(255,255,255,.55) 33%, transparent 36%),
-    radial-gradient(ellipse at 74% 20%, transparent 0 29%, rgba(255,255,255,.46) 30%, transparent 34%),
-    radial-gradient(ellipse at 60% 84%, transparent 0 31%, rgba(173,207,232,.38) 32%, transparent 36%);
-  filter: blur(.2px);
-  animation: drift 9s ease-in-out infinite alternate;
+    radial-gradient(ellipse at 22% 36%, transparent 0 28%, rgba(255,255,255,.7) 29%, transparent 33%),
+    radial-gradient(ellipse at 72% 28%, transparent 0 32%, rgba(255,255,255,.55) 33%, transparent 37%),
+    radial-gradient(ellipse at 54% 84%, transparent 0 30%, rgba(190,220,240,.5) 31%, transparent 35%);
+  filter: blur(.3px);
+  animation: drift 10s ease-in-out infinite alternate;
 }
 
-.label {
-  position: relative;
-  z-index: 2;
-  font-size: 9px;
-  line-height: 1;
-  letter-spacing: .28em;
-  font-weight: 700;
-  color: #9cb0c3;
-  margin-bottom: 16px;
-}
-
-.time-row {
-  position: relative;
-  z-index: 2;
-  display: inline-flex;
-  align-items: baseline;
-  justify-content: center;
-  gap: 7px;
-}
-
-#time {
-  font-size: 39px;
-  line-height: .9;
-  letter-spacing: -0.055em;
-  font-weight: 500;
-  color: var(--ink);
-  text-shadow: 0 1px 0 rgba(255,255,255,.8);
-}
-
-#ampm {
-  font-size: 11px;
-  line-height: 1;
-  letter-spacing: .13em;
-  font-weight: 700;
-  color: #9aacbd;
-}
-
-#date {
-  position: relative;
-  z-index: 2;
-  margin-top: 13px;
-  font-size: 10px;
-  letter-spacing: .13em;
-  font-weight: 650;
-  color: var(--soft-ink);
-}
-
-.orbit {
-  position: relative;
-  z-index: 2;
-  width: 34px;
-  height: 1px;
-  margin: 14px auto 0;
-  background: linear-gradient(90deg, transparent, rgba(158,188,214,.72), transparent);
-}
-
-.orbit::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  top: -2px;
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: rgba(255,255,255,.95);
-  box-shadow:
-    0 0 10px rgba(181,214,240,.95),
-    0 0 18px rgba(255,255,255,.85);
-  transform: translateX(-50%);
-  animation: pearl 3.8s ease-in-out infinite;
-}
-
-@keyframes glassLight {
-  0%, 62%, 100% {
+@keyframes light {
+  0%, 64%, 100% {
     opacity: 0;
     transform: translateX(-58%) rotate(8deg);
   }
-  72% {
-    opacity: .75;
+  76% {
+    opacity: .72;
   }
-  84% {
+  88% {
     opacity: 0;
     transform: translateX(58%) rotate(8deg);
   }
@@ -210,70 +159,58 @@ body {
 
 @keyframes drift {
   from {
-    transform: translate3d(-4px, -2px, 0) scale(1);
+    transform: translate(-5px, -2px) scale(1);
   }
   to {
-    transform: translate3d(5px, 3px, 0) scale(1.025);
+    transform: translate(6px, 4px) scale(1.03);
   }
 }
 
-@keyframes pearl {
-  0%, 100% {
-    opacity: .38;
-    transform: translateX(-50%) scale(.82);
-  }
-  50% {
-    opacity: 1;
-    transform: translateX(-50%) scale(1.12);
-  }
-}
-
-@media (hover: hover) {
-  .clock-card {
+@media (hover:hover) {
+  .clock {
     transition: transform .35s ease, box-shadow .35s ease;
   }
 
-  .clock-card:hover {
+  .clock:hover {
     transform: translateY(-2px);
     box-shadow:
-      0 28px 62px rgba(95, 125, 154, .18),
-      0 8px 22px rgba(126, 158, 188, .12),
-      inset 0 1px 1px rgba(255,255,255,.95),
-      inset 0 -18px 38px rgba(196,216,232,.14);
+      0 30px 70px rgba(92,120,145,.2),
+      inset 0 1px 1px rgba(255,255,255,.9),
+      inset 0 -28px 50px rgba(160,190,215,.14);
   }
 }
 </style>
 </head>
 
 <body>
-  <div class="clock-card">
-    <div class="lens"></div>
+  <div class="clock">
     <div class="caustic"></div>
 
-    <div class="label">LUMEN</div>
+    <div id="date" class="date">SUN · JUL 05</div>
 
-    <div class="time-row">
+    <div class="time-wrap">
       <div id="time">00:00</div>
       <div id="ampm">AM</div>
     </div>
 
-    <div id="date">SUN · JUL 05</div>
-    <div class="orbit"></div>
+    <div class="sub">
+      LUMEN <span></span> GLASS
+    </div>
   </div>
 
 <script>
 function updateClock() {
   const now = new Date();
 
-  const timeParts = new Intl.DateTimeFormat("en-US", {
+  const parts = new Intl.DateTimeFormat("en-US", {
     hour: "2-digit",
     minute: "2-digit",
     hour12: true
   }).formatToParts(now);
 
-  const hour = timeParts.find(part => part.type === "hour").value;
-  const minute = timeParts.find(part => part.type === "minute").value;
-  const dayPeriod = timeParts.find(part => part.type === "dayPeriod").value;
+  const hour = parts.find(p => p.type === "hour").value;
+  const minute = parts.find(p => p.type === "minute").value;
+  const ampm = parts.find(p => p.type === "dayPeriod").value;
 
   const date = new Intl.DateTimeFormat("en-US", {
     weekday: "short",
@@ -282,7 +219,7 @@ function updateClock() {
   }).format(now).replace(",", " ·").toUpperCase();
 
   document.getElementById("time").textContent = `${hour}:${minute}`;
-  document.getElementById("ampm").textContent = dayPeriod;
+  document.getElementById("ampm").textContent = ampm;
   document.getElementById("date").textContent = date;
 }
 
