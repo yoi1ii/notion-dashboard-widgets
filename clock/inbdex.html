@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Clock Widget</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    width:100vw;
+    height:100vh;
+
+    background:transparent;
+
+    font-family:"Pretendard","Apple SD Gothic Neo",sans-serif;
+
+}
+
+.clock{
+
+    width:240px;
+
+    padding:28px;
+
+    border-radius:28px;
+
+    background:rgba(255,255,255,.25);
+
+    backdrop-filter:blur(18px);
+
+    border:1px solid rgba(255,255,255,.45);
+
+    text-align:center;
+
+    box-shadow:
+    0 10px 30px rgba(116,148,181,.15);
+
+}
+
+.small{
+
+    font-size:12px;
+
+    letter-spacing:.15em;
+
+    color:#9aaec3;
+
+    margin-bottom:12px;
+
+    text-transform:uppercase;
+
+}
+
+#time{
+
+    font-size:42px;
+
+    color:#55697e;
+
+    font-weight:500;
+
+}
+
+#date{
+
+    margin-top:10px;
+
+    font-size:13px;
+
+    color:#8ea4ba;
+
+}
+
+.star{
+
+    margin-top:18px;
+
+    font-size:15px;
+
+    color:#bfd7ef;
+
+    animation:float 2.5s infinite ease-in-out;
+
+}
+
+@keyframes float{
+
+0%,100%{
+
+transform:translateY(0);
+
+opacity:.5;
+
+}
+
+50%{
+
+transform:translateY(-4px);
+
+opacity:1;
+
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="clock">
+
+<div class="small">
+current time
+</div>
+
+<div id="time">
+00:00
+</div>
+
+<div id="date">
+0000.00.00
+</div>
+
+<div class="star">
+✦
+</div>
+
+</div>
+
+<script>
+
+function updateClock(){
+
+const now=new Date();
+
+const time=now.toLocaleTimeString("ko-KR",{
+
+hour:"2-digit",
+
+minute:"2-digit",
+
+hour12:true
+
+});
+
+const date=now.toLocaleDateString("ko-KR",{
+
+year:"numeric",
+
+month:"long",
+
+day:"numeric",
+
+weekday:"long"
+
+});
+
+document.getElementById("time").innerHTML=time;
+
+document.getElementById("date").innerHTML=date;
+
+}
+
+updateClock();
+
+setInterval(updateClock,1000);
+
+</script>
+
+</body>
+
+</html>
