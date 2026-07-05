@@ -210,7 +210,7 @@ function updateClock() {
 
   const hour = parts.find(p => p.type === "hour").value;
   const minute = parts.find(p => p.type === "minute").value;
-  const ampm = parts.find(p => p.type === "dayPeriod").value;
+  const ampm = parts.find(p => p.type === "dayPeriod")?.value || "";
 
   const date = new Intl.DateTimeFormat("en-US", {
     weekday: "short",
