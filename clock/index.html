@@ -3,7 +3,11 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Lumen Clock</title>
+<title>Dream Clock</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
 <style>
 * {
@@ -15,168 +19,107 @@
 body {
   width: 100vw;
   height: 100vh;
-  display: grid;
-  place-items: center;
   overflow: hidden;
   background: transparent;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, sans-serif;
 }
 
 .clock {
-  width: 330px;
-  height: 190px;
+  width: 100vw;
+  height: 100vh;
   position: relative;
   overflow: hidden;
-  border-radius: 38px;
-  padding: 24px 26px;
-
-  background:
-    radial-gradient(circle at 18% 12%, rgba(255,255,255,.72), transparent 30%),
-    radial-gradient(circle at 78% 82%, rgba(176,205,225,.28), transparent 35%),
-    linear-gradient(135deg, rgba(246,250,253,.58), rgba(210,225,238,.28));
-
-  border: 1px solid rgba(255,255,255,.72);
-
-  box-shadow:
-    0 24px 60px rgba(92,120,145,.18),
-    inset 0 1px 1px rgba(255,255,255,.9),
-    inset 0 -28px 50px rgba(160,190,215,.12);
-
-  backdrop-filter: blur(24px) saturate(120%);
-  -webkit-backdrop-filter: blur(24px) saturate(120%);
-}
-
-.clock::before {
-  content: "";
-  position: absolute;
-  inset: -60%;
-  background: linear-gradient(
-    115deg,
-    transparent 40%,
-    rgba(255,255,255,.58) 50%,
-    transparent 60%
-  );
-  opacity: 0;
-  animation: light 13s ease-in-out infinite;
+  display: grid;
+  place-items: center;
+  background-image: url("bg.png");
+  background-size: cover;
+  background-position: center;
+  isolation: isolate;
 }
 
 .clock::after {
   content: "";
   position: absolute;
-  inset: 10px;
-  border-radius: 30px;
-  border-top: 1px solid rgba(255,255,255,.58);
-  border-left: 1px solid rgba(255,255,255,.28);
+  inset: 0;
+  background:
+    radial-gradient(circle at 50% 45%, rgba(255,255,255,.18), transparent 45%),
+    linear-gradient(to bottom, rgba(255,255,255,.08), rgba(190,215,238,.08));
+  z-index: 1;
   pointer-events: none;
 }
 
-.date {
+.content {
   position: relative;
   z-index: 2;
   text-align: center;
-  font-size: 13px;
-  letter-spacing: .16em;
-  font-weight: 700;
-  color: rgba(94,112,130,.66);
-  margin-bottom: 8px;
+  transform: translateY(2px);
 }
 
-.time-wrap {
-  position: relative;
-  z-index: 2;
-  display: flex;
-  justify-content: center;
-  align-items: baseline;
-  gap: 10px;
-}
-
-#time {
-  font-size: 86px;
-  line-height: .95;
-  letter-spacing: -0.08em;
-  font-weight: 800;
+.star {
+  font-size: 18px;
   color: rgba(255,255,255,.92);
+  text-shadow: 0 0 18px rgba(255,255,255,.9);
+  margin-bottom: 22px;
+  animation: twinkle 4s ease-in-out infinite;
+}
+
+.date {
+  font-family: "Instrument Serif", serif;
+  font-size: 20px;
+  letter-spacing: .48em;
+  color: rgba(83,112,153,.76);
+  margin-bottom: 38px;
+  text-transform: lowercase;
+}
+
+.time {
+  font-family: "Instrument Serif", serif;
+  font-size: clamp(88px, 18vw, 190px);
+  line-height: .78;
+  letter-spacing: .045em;
+  font-weight: 400;
+  color: rgba(255,255,255,.96);
   text-shadow:
-    0 1px 12px rgba(95,120,145,.16),
-    0 2px 24px rgba(255,255,255,.52);
+    0 0 16px rgba(255,255,255,.7),
+    0 8px 30px rgba(115,145,175,.2);
 }
 
-#ampm {
-  font-size: 15px;
-  letter-spacing: .12em;
-  font-weight: 800;
-  color: rgba(255,255,255,.78);
-  text-shadow: 0 1px 10px rgba(96,120,145,.18);
-}
-
-.sub {
-  position: relative;
-  z-index: 2;
-  margin-top: 14px;
+.caption-wrap {
+  margin-top: 38px;
   display: flex;
-  justify-content: center;
-  gap: 9px;
   align-items: center;
-  font-size: 11px;
-  letter-spacing: .18em;
-  font-weight: 700;
-  color: rgba(103,124,143,.58);
+  justify-content: center;
+  gap: 14px;
 }
 
-.sub span {
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background: rgba(255,255,255,.95);
-  box-shadow: 0 0 14px rgba(190,220,242,.95);
+.line {
+  width: 56px;
+  height: 1px;
+  background: rgba(89,117,155,.36);
 }
 
-.caustic {
-  position: absolute;
-  inset: 0;
-  opacity: .16;
-  background:
-    radial-gradient(ellipse at 22% 36%, transparent 0 28%, rgba(255,255,255,.7) 29%, transparent 33%),
-    radial-gradient(ellipse at 72% 28%, transparent 0 32%, rgba(255,255,255,.55) 33%, transparent 37%),
-    radial-gradient(ellipse at 54% 84%, transparent 0 30%, rgba(190,220,240,.5) 31%, transparent 35%);
-  filter: blur(.3px);
-  animation: drift 10s ease-in-out infinite alternate;
+.caption-star {
+  font-size: 13px;
+  color: rgba(80,112,153,.66);
 }
 
-@keyframes light {
-  0%, 64%, 100% {
-    opacity: 0;
-    transform: translateX(-58%) rotate(8deg);
-  }
-  76% {
-    opacity: .72;
-  }
-  88% {
-    opacity: 0;
-    transform: translateX(58%) rotate(8deg);
-  }
+.caption {
+  margin-top: 10px;
+  font-family: "Instrument Serif", serif;
+  font-style: italic;
+  font-size: 20px;
+  letter-spacing: .35em;
+  color: rgba(74,105,150,.74);
+  text-transform: lowercase;
 }
 
-@keyframes drift {
-  from {
-    transform: translate(-5px, -2px) scale(1);
+@keyframes twinkle {
+  0%, 100% {
+    opacity: .45;
+    transform: scale(.9);
   }
-  to {
-    transform: translate(6px, 4px) scale(1.03);
-  }
-}
-
-@media (hover:hover) {
-  .clock {
-    transition: transform .35s ease, box-shadow .35s ease;
-  }
-
-  .clock:hover {
-    transform: translateY(-2px);
-    box-shadow:
-      0 30px 70px rgba(92,120,145,.2),
-      inset 0 1px 1px rgba(255,255,255,.9),
-      inset 0 -28px 50px rgba(160,190,215,.14);
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
   }
 }
 </style>
@@ -184,17 +127,18 @@ body {
 
 <body>
   <div class="clock">
-    <div class="caustic"></div>
+    <div class="content">
+      <div class="star">✦</div>
+      <div id="date" class="date">sunday, july 05</div>
+      <div id="time" class="time">04:04</div>
 
-    <div id="date" class="date">SUN · JUL 05</div>
+      <div class="caption-wrap">
+        <div class="line"></div>
+        <div class="caption-star">✶</div>
+        <div class="line"></div>
+      </div>
 
-    <div class="time-wrap">
-      <div id="time">00:00</div>
-      <div id="ampm">AM</div>
-    </div>
-
-    <div class="sub">
-      LUMEN <span></span> GLASS
+      <div class="caption">still, in dream</div>
     </div>
   </div>
 
@@ -205,21 +149,19 @@ function updateClock() {
   const parts = new Intl.DateTimeFormat("en-US", {
     hour: "2-digit",
     minute: "2-digit",
-    hour12: true
+    hour12: false
   }).formatToParts(now);
 
-  const hour = parts.find(p => p.type === "hour").value;
-  const minute = parts.find(p => p.type === "minute").value;
-  const ampm = parts.find(p => p.type === "dayPeriod")?.value || "";
+  const hour = parts.find(part => part.type === "hour")?.value || "00";
+  const minute = parts.find(part => part.type === "minute")?.value || "00";
 
   const date = new Intl.DateTimeFormat("en-US", {
-    weekday: "short",
-    month: "short",
+    weekday: "long",
+    month: "long",
     day: "2-digit"
-  }).format(now).replace(",", " ·").toUpperCase();
+  }).format(now).toLowerCase();
 
-  document.getElementById("time").textContent = `${hour}:${minute}`;
-  document.getElementById("ampm").textContent = ampm;
+  document.getElementById("time").textContent = hour + ":" + minute;
   document.getElementById("date").textContent = date;
 }
 
